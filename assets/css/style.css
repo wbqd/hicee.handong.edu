@@ -89,7 +89,7 @@ section {
 
   position: absolute;
 
-  background: url(../../images/7th_poster.png) center bottom no-repeat fixed;
+  background: url(../../images/7th_poster_1.png) center bottom no-repeat fixed;
 
   background-size: 100% auto;
 
@@ -651,7 +651,7 @@ section {
 
 .well.panel.alt.gray-light {
 
-  background: #f9f9f9 url(../../images/headertopalt.png) 0% 0% fixed no-repeat;
+  background: #f9f9f9 url(../../images/7th poster_2.png) 0% 0% fixed no-repeat;
 
   color: #555;
 
@@ -659,7 +659,7 @@ section {
 
 .well.panel.alt2.gray-light {
 
-  background: #f9f9f9 url(../../images/headertopalt2.png) 0% 0% fixed no-repeat;
+  background: #f9f9f9 url(../../images/7th poster_3.png) 0% 0% fixed no-repeat;
 
   color: #555;
 
@@ -784,7 +784,7 @@ section {
 
 .well.panel.alt {
 
-  background: url(../../images/headertopalt.png) 0% 0% fixed no-repeat;
+  background: url(../../images/7th%20poster_2.png) 0% 0% fixed no-repeat;
 
   margin-top: 60px;
 
@@ -812,7 +812,7 @@ section {
 
 .well.panel.alt2 {
 
-  background: url(../../images/headertopalt2.png) 0% 0% fixed no-repeat;
+  background: url(../../images/7th%20poster_3.png) 0% 0% fixed no-repeat;
 
   margin-top: 60px;
 
@@ -1105,7 +1105,7 @@ footer a.credits:hover {
 
   font-size: 32.5px;
 
-  font-weight: 700;
+  font-weight: 400;
 
   margin-right: 30px;
 
@@ -2025,5 +2025,33 @@ footer a.credits:hover {
     background-position: 100% 100%;
 
   }
+
+}
+
+.lead li {
+
+  padding-bottom: 10px;
+
+}
+
+.page-header li {
+
+  text-align: left;
+
+  font-size: 18px;
+
+  margin-bottom: 10px;
+
+}
+
+.unvisible {
+
+  visibility: hidden;
+
+}
+
+p.caption {
+
+  font-size: 16px;
 
 }
