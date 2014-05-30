@@ -752,9 +752,9 @@ section {
 
   margin-bottom: -100px;
 
-  margin-top: 80px;
+  margin-top: 10px;
 
-  padding-top: 120px;
+  padding-top: 10px;
 
   padding-bottom: 80px;
 
@@ -978,7 +978,7 @@ footer#foot-sec {
 
   min-width: 100%;
 
-  padding-top: 50px;
+  padding-top: 0px;
 
   padding-bottom: 50px;
 
@@ -2070,4 +2070,9 @@ p.caption {
 .holding-panel {
   margin: 0 auto 10px auto;
   max-width: 400px;
+}
+
+.embeded-pdf {
+  width: inherit;
+  height: auto;
 }

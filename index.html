@@ -72,7 +72,8 @@
             <span class="icon-bar"></span>
           </button>
           <a class="brand shape" href="#head-top">
-            <img id="logo" class="img-responsive col-xs-12" src="images/hicee.png">
+            <!-- <img id="logo" class="img-responsive col-xs-12" src="images/hicee.png"> -->
+            <i class="fa fa-university"></i>HICEE한동공학교육혁신센터
           </a>
           <div class="nav-collapse collapse top-spy pull-right">
             <ul class="nav" id="topnav">
@@ -139,7 +140,22 @@
           <div id="applynow" class="span12 text-center">
             <div class="btn-group">
               <a type="button" class="btn btn-info  btn-large" href="https://adobeformscentral.com/?f=tvz59PudQlScvxlSgrqpaQ" target="_blank"><i class="fa fa-pencil-square-o"></i> 참가신청</a>
-              <a type="button" class="btn btn-danger btn-large" href="resources/7th%20poster.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i> 포스터 보기</a>
+              <a type="button" class="btn btn-danger btn-large" data-toggle="modal" data-target="#pdfModal"><i class="fa fa-file-pdf-o"></i> 포스터 보기</a>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="pdfModal" tabindex="-1" role="dialog" aria-labelledby="pdfModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-body">
+                    <img src="resources/7th-poster.png" />
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary"><a href="resources/7th-poster.pdf" target="_blank">PDF 내려받기</a>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -434,10 +450,10 @@
       <div class="row-fluid text-center">
         <div class="span12 text-center">
           <div style="display:inline-block;">
-            <div id="email" class="circ-wrap" data-toggle="tooltip" data-placement="top" title="queen@handong.edu">
+            <div id="email" class="circ-wrap" data-toggle="tooltip" data-placement="top" title="queen@handong.edu | Click to mail">
               <a href="mailto:queen@handong.edu" target="_top"><i class="fa fa-envelope-square icon-4x"></i></a>
             </div>
-            <div id="phone" class="circ-wrap" data-toggle="tooltip" data-placement="top" title="054-260-1526">
+            <div id="phone" class="circ-wrap" data-toggle="tooltip" data-placement="top" title="054-260-1526 | Click to call">
               <a href="tel:0542601526"><i class="fa fa-phone-square icon-4x"></i></a>
             </div>
           </div>
@@ -541,6 +557,10 @@
   <script>
     jQuery('.scrollto').localScroll(800);
   </script>
+
+  <!-- modal.js -->
+  <script type="text/javascript" src="assets/js/modal.js"></script>
+
 
 </body>
 
