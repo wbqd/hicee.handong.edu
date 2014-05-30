@@ -2073,17 +2073,17 @@ p.caption {
   height: auto;
 
 }
-.img-responsive {
-  
-}
 
-.text-blue {
+.img-responsive {} .text-blue {
+
   color: #3498db;
+
   font-weight: 600;
+
 }
 
 .btn-big {
-  max-width: 1000px;
+
+  width: 100%;
+
 }
-
-
