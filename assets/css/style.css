@@ -1103,6 +1103,8 @@ footer a.credits:hover {
 
   margin-right: 30px;
 
+  margin-top: 10px;
+
 }
 
 .navbar-fixed-top .navbar-inner,
@@ -1852,7 +1854,7 @@ footer a.credits:hover {
 
   #head-top .hero-unit {
 
-    padding-top: 20px;
+    padding-top: 60px;
 
   }
 
@@ -1956,18 +1958,6 @@ footer a.credits:hover {
 
   }
 
-  #head-top .hero-unit {
-
-    padding-top: 10px;
-
-  }
-
-  #head-top .hero-unit {
-
-    padding-top: 20px;
-
-  }
-
   #head-top .hero-unit h1 {
 
     font-weight: 400;
@@ -2067,12 +2057,33 @@ p.caption {
   padding: 15px;
 
 }
+
 .holding-panel {
+
   margin: 0 auto 10px auto;
+
   max-width: 400px;
+
 }
 
 .embeded-pdf {
+
   width: inherit;
+
   height: auto;
+
 }
+.img-responsive {
+  
+}
+
+.text-blue {
+  color: #3498db;
+  font-weight: 600;
+}
+
+.btn-big {
+  max-width: 1000px;
+}
+
+
