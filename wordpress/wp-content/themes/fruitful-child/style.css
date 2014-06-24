@@ -9,3 +9,15 @@ Version:        0.1.0
 */
 
 @import url("../fruitful/style.css");
+
+img.logo {
+  max-width: 300px;
+  height: auto;
+}
+
+.main-navigation ul ul a:hover:after {
+  content: "\f0d9";
+  font-family: FontAwesome;
+  display: inline-block;
+  float: right;
+}
