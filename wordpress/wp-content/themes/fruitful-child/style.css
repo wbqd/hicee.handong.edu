@@ -9,10 +9,3 @@ Version:        0.1.0
 */
 
 @import url("../fruitful/style.css");
-
-.main-navigation ul ul a:after {
-  content: ">";
-  float: right;
-  margin-left: 6px;
-  font-size: 14px;
-}
