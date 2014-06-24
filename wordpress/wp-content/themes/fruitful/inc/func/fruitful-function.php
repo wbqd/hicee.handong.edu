@@ -112,7 +112,7 @@ function fruitful_flex_effect() {
 			'value' =>	   'boxRainGrowReverse',
 			'label' => __( 'boxRainGrowReverse', 'fruitful' )
 		)
-		
+
 	);
 
 	return apply_filters( 'fruitful_flex_effect', $flex_effects );
@@ -226,8 +226,8 @@ function fruitful_fonts_list() {
 			'value' => 	   'MS Serif, New York, serif',
 			'label' => __( 'MS Serif, New York, serif', 'fruitful' )
 		),
-		
-		/*Google fonts*/	
+
+		/*Google fonts*/
 		'15' => array(
 			'value' => 	   'Open Sans, sans-serif',
 			'label' => __( 'Open Sans, sans-serif', 'fruitful' )
@@ -271,6 +271,10 @@ function fruitful_fonts_list() {
 		'25' => array(
 			'value' => 	   'Droid Sans, sans-serif',
 			'label' => __( 'Droid Sans, sans-serif', 'fruitful' )
+		),
+		'26' => array(
+			'value' =>     'Nanum Gothic, sans-serif',
+			'label' => __( 'Nanum Gothic, sans-serif', 'fruitful' )
 		)
 	);
 
@@ -308,12 +312,12 @@ function fruitful_social_links_positions_list() {
              !isset($wp_settings_fields[$page]) ||
              !isset($wp_settings_fields[$page][$section['id']]) )
                 continue;
-        	 
+
 			$name_id = "settings-section-" . $id_;
 			 print '<div id="'. $name_id .'" class="settings-section">';
 					fruitful_custom_do_settings_fields($page, $section['id']);
 			 print '</div>';
-		$id_++;		 
+		$id_++;
     }
 }
 
@@ -326,7 +330,7 @@ function fruitful_custom_do_settings_fields($page, $section) {
          !isset($wp_settings_fields[$page]) ||
          !isset($wp_settings_fields[$page][$section]) )
         return;
-		
+
     foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
         print '<div id="set_form_row_' . $id_ .'" class="settings-form-row">';
         if ( !empty($field['args']['label_for']) )
@@ -338,7 +342,7 @@ function fruitful_custom_do_settings_fields($page, $section) {
 				print '<div class="box-options">';
 				call_user_func($field['callback'], $field['args']);
 		print '</div></div>';
-			$id_++;		 
+			$id_++;
     }
 }
 
@@ -353,7 +357,7 @@ function fruitful_add_admin_style() {
 
 function fruitful_add_jquery_script() {
 	wp_enqueue_script('wp-color-picker');
-	
+
 	if( function_exists( 'wp_enqueue_media' ) ){
 		wp_enqueue_media();
 	} else {
@@ -361,7 +365,7 @@ function fruitful_add_jquery_script() {
 		wp_enqueue_script('media-upload');
 		wp_enqueue_script('thickbox');
 	}
-	
+
 	wp_enqueue_script('chJq',				get_template_directory_uri() . "/inc/js/ch/ch.js", array('jquery'));
 	wp_enqueue_script('slJq',				get_template_directory_uri() . "/inc/js/sl/jquery.formstyler.min.js", array('jquery'));
 	wp_enqueue_script('dialog', 			get_template_directory_uri() . "/inc/js/dialogBox/jquery-impromptu.min.js",  array('jquery'));
@@ -379,16 +383,16 @@ function fruitful_get_box_upload_image($val, $field, $btnclassup = 'upload_btn',
 						$out .= '<img id="'.$imgid.'" src="'.esc_url_raw($image_attributes[0]).'" alt="" />';
 					} else {
 						$out .= '<img src="'.esc_url_raw($image_attributes[0]).'" alt="" />';
-					}					
+					}
 				$out .= '</div>	';
 			}
-			
+
 			$out .= '<input class="of-input" name="fruitful_theme_options['. $field .']"   id="'. $field .'_upload" type="hidden" value="'. $val .'" />';
 			$out .= '<div class="upload_button_div">';
 				$out .= '<span data-imagetype="'.$imgcontclass.'" class="button '. $btnclassup .'" id="'. $field .'">'. __('Upload Image', 'fruitful') .'</span>';
 			if(!empty($val)) {
 				$none = '';
-			} else { 
+			} else {
 				$none = 'none';
 			}
 				$out .= '<span class="button ' . $btnclassr . ' ' . $none .'" id="reset_'. $field .'" title="' . $field . '">'.__('Remove', 'fruitful') .'</span>';
@@ -399,14 +403,14 @@ function fruitful_get_box_upload_image($val, $field, $btnclassup = 'upload_btn',
 
 
 function fruitful_get_box_upload_slide($attach_id, $link_url, $is_blank, $ind, $btnclassup = 'upload_btn',  $btnclassr = 'reset_btn') {
-	$out  = ''; 
+	$out  = '';
 	$out .= '<div class="box-image">';
 	if ($attach_id != -1) {
 		$out .= '<div class="img-container custom-slide">';
 			$image_attributes = wp_get_attachment_image_src($attach_id, 'full');
 			$out .= '<img src="'.esc_url_raw($image_attributes[0]).'" alt="" />';
 		$out .= '</div>	';
-				
+
 	}
 		/*Link out for Slider*/
 		$out .= '<label for="slide-link-'.$ind.'">'. __('Link URL', 'fruitful') .'</label>';
@@ -416,7 +420,7 @@ function fruitful_get_box_upload_slide($attach_id, $link_url, $is_blank, $ind, $
 		$out .= '<label for="link-blank-'.$ind.'">';
 		$out .= '<input type="checkbox" name="fruitful_theme_options[slides][slide-'.$ind.'][is_blank]" id="link-blank-'.$ind.'" class="link-target-'.$ind.'" '. checked( 'on', $is_blank, false) .'/>';
 		$out .= __('Target "_blank"', 'fruitful') .'</label>';
-	
+
 		$out .= '<input class="of-input" name="fruitful_theme_options[slides][slide-'.$ind.'][attach_id]" id="attach-'.$ind.'" type="hidden" value="'. intval($attach_id) .'" />';
 		$out .= '<div class="upload_button_div">';
 			$out .= '<span data-imagetype="slide" class="button '. $btnclassup .'" id="add-slide-btn-'. $ind .'">Upload Image</span>';
@@ -442,7 +446,7 @@ function fruitful_get_select_fields($field_name, $options, $array_of_values, $cl
 	$out .= '</select>';
 	echo $out;
 }
-	
+
 function fruitful_ret_options ($name_options) {
    return $options = array_filter((array) get_option($name_options));
 }
@@ -460,51 +464,51 @@ return array(
 				'is_wpml_ready'		=> 'on',
 
 				/*Header image*/
-				'header_bg_color'	=> '#ffffff',	
+				'header_bg_color'	=> '#ffffff',
 				'header_img' 	=> '',
 				'header_height' => '84',
-				
+
 				/*Background Image*/
 				'backgroung_img'    => '',
-				'background_color'	=> '#ffffff', 
+				'background_color'	=> '#ffffff',
 				'bg_repeating'		=> 'off',
-				'container_bg_color' => '#ffffff', 
-				
+				'container_bg_color' => '#ffffff',
+
 				/*logo*/
 				'logo_img'			=> '',
 				'fav_icon'			=> '',
-				
+
 				'logo_position'		=> '0',
 				'menu_position'		=> '2',
-				
+
 				/*Color*/
 				'menu_bg_color'		=> '#ffffff',
 				'menu_btn_color'	=> '#F15A23',
 				'menu_hover_color'	=> '#ffffff',
-				'menu_font_color'	=> '#333333',		
-				
+				'menu_font_color'	=> '#333333',
+
 
 				/*Dropdown Color*/
 				'dd_menu_bg_color'		=> '#ffffff',
 				'dd_menu_btn_color'		=> '#F15A23',
 				'dd_menu_hover_color'	=> '#333333',
-				'dd_menu_font_color'	=> '#333333',		
-	
+				'dd_menu_font_color'	=> '#333333',
+
 				/*General font colors*/
 				'p_font_color'			=> '#333333',
 				'a_font_color'			=> '#333333',
 				'a_hover_font_color'	=> '#FF5D2A',
 				'a_focus_font_color'	=> '#FF5D2A',
 				'a_active_font_color'	=> '#FF5D2A',
-				
+
 				/*Color for lines*/
-				'widgets_sep_color'		=> '#F15A23',	
-				'btn_color'				=> '#333333',	
-				'btn_active_color'		=> '#F15A23',	
+				'widgets_sep_color'		=> '#F15A23',
+				'btn_color'				=> '#333333',
+				'btn_active_color'		=> '#F15A23',
 				'date_of_post_b_color' 	=> '#F15A23',
 				'date_of_post_f_color'	=> '#ffffff',
-				
-				
+
+
 				/*fonts*/
 				'h_font_family'		=> 'Open Sans, sans-serif',
 				'h1_size'			=> '27',
@@ -518,15 +522,15 @@ return array(
 				'p_font_family'		=> 'Open Sans, sans-serif',
 				'p_size'			=> '14',
 				'select_slider'     => '1',
-				
-				
+
+
 				/*Sliders*/
-				
+
 				//'s_width'			=> '960',
 				//'s_height'		=> '520',
-				
+
 				/*slider flex*/
-				's_animation'		=> 'fade', 
+				's_animation'		=> 'fade',
 				's_direction'		=> 'horizontal',
 				's_reverse'			=> 'false',
 				's_slideshow'		=> 'true',
@@ -535,7 +539,7 @@ return array(
 				's_initDelay'		=> '0',
 				's_randomize'		=> 'false',
 				's_controlnav'		=> 'true',
-				
+
 				/*slider nivo*/
 				'nv_skins'				=> 'theme-bar',
 				'nv_animation' 			=> 'random',
@@ -554,12 +558,12 @@ return array(
 				'nv_nextText' 			=> 'Next',
 				'nv_randomStart' 		=> 'false',
 				'slides'				=> '',
-				
+
 				/*End Sliders*/
-				
-				/*footer*/			 
-				'footer_text'	 => esc_attr__( 'Fruitful theme by', 'fruitful' ) . ' <a href="' . esc_url(__('http://fruitfulcode.com','fruitful')) . '">' . esc_attr__( 'fruitfulcode', 'fruitful' ) . '</a> ' . esc_attr__( 'Powered by:', 'fruitful' ) . ' <a href="' . esc_url(__('http://wordpress.org','fruitful')) . '">' . esc_attr__( 'WordPress', 'fruitful' ) . '</a>', 
-				
+
+				/*footer*/
+				'footer_text'	 => esc_attr__( 'Fruitful theme by', 'fruitful' ) . ' <a href="' . esc_url(__('http://fruitfulcode.com','fruitful')) . '">' . esc_attr__( 'fruitfulcode', 'fruitful' ) . '</a> ' . esc_attr__( 'Powered by:', 'fruitful' ) . ' <a href="' . esc_url(__('http://wordpress.org','fruitful')) . '">' . esc_attr__( 'WordPress', 'fruitful' ) . '</a>',
+
 				/*socials*/
 				'sl_position'		=> '0',
 				'facebook_url' 		=> '',
@@ -576,7 +580,7 @@ return array(
 				'instagram_url'		=> '',
 				'pinterest_url'		=> '',
 				'yelp_url'			=> '',
-				'email_link'		=> '', 
+				'email_link'		=> '',
 
 				'custom_css'        => stripslashes('')
 		);
