@@ -1,0 +1,11 @@
+/*
+Theme Name:     Fruitful Child
+Theme URI:      http: //hicee.handong.com/
+Description:    Child theme for the Fruitful theme
+Author:         Joshua Jung
+Author URI:     https://github.com/wbqd
+Template:       fruitful
+Version:        0.1.0
+*/
+
+@import url("../fruitful/style.css")
