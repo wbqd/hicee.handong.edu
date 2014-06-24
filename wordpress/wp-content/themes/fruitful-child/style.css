@@ -15,7 +15,7 @@ img.logo {
   height: auto;
 }
 
-.main-navigation ul ul a:hover:after {
+.main-navigation ul ul li.menu-item-has-children a:hover:after {
   content: "\f0d9";
   font-family: FontAwesome;
   display: inline-block;
