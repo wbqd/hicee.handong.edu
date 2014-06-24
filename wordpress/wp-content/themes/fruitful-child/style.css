@@ -12,7 +12,7 @@ Version:        0.1.0
 
 .main-navigation ul ul a:after {
   content: ">";
-  float: none;
+  float: right;
   margin-left: 6px;
   font-size: 14px;
 }
