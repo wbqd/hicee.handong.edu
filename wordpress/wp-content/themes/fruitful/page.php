@@ -18,11 +18,11 @@ get_header(); ?>
 			$is_sidebar = fruitful_is_woo_sidebar();
 			if ($is_sidebar) {
 		?>
-		<div class="four columns alpha">
+		<div class="three columns alpha">
 			<?php get_sidebar('page'); ?>
 		</div>
 		<?php } ?>
-		<div class="twelve columns omega">
+		<div class="thirteen columns omega">
 			<div id="primary" class="content-area">
 				<div id="content" class="site-content" role="main">
 				<?php while ( have_posts() ) : the_post(); ?>
