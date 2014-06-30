@@ -1,6 +1,15 @@
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
+# WordPress SEO - XML Sitemap Rewrite Fix
+RewriteEngine On
+RewriteBase /wordpress/
+RewriteRule ^sitemap_index.xml$ /wordpress/index.php?sitemap=1 [L]
+RewriteRule ^locations.kml$ /wordpress/index.php?sitemap=wpseo_local_kml [L]
+RewriteRule ^geo_sitemap.xml$ /wordpress/index.php?sitemap=geo [L]
+RewriteRule ^([^/]+?)-sitemap([0-9]+)?.xml$ /wordpress/index.php?sitemap=$1&sitemap_n=$2 [L]
+RewriteRule ^([a-z]+)?-?sitemap.xsl$ /wordpress/index.php?xsl=$1 [L]
+# END WordPress SEO - XML Sitemap Rewrite Fix
 RewriteEngine On
 RewriteBase /wordpress/
 RewriteRule ^index\.php$ - [L]
