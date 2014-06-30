@@ -8,11 +8,11 @@
  */
 
 get_header(); ?>
-  <?php if (get_post_type( $post ) == 'post') { 
+  <?php if (get_post_type( $post ) == 'post') {
 				$post_template = get_post_meta( $post->ID, 'frutiful_posts_template', true );
-				fruitful_get_content_with_custom_sidebar($post_template); 
+				fruitful_get_content_with_custom_sidebar($post_template);
 		} else { ?>
-			<div class="eleven columns alpha">
+			<div class="thirteen columns alpha">
 				<div id="primary" class="content-area">
 					<div id="content" class="site-content" role="main">
 					<?php while ( have_posts() ) : the_post(); ?>
@@ -22,14 +22,14 @@ get_header(); ?>
 					<?php
 						// If comments are open or we have at least one comment, load up the comment template
 						if (fruitful_state_post_comment()) {
-							if ( comments_open() || '0' != get_comments_number() ) comments_template(); 
+							if ( comments_open() || '0' != get_comments_number() ) comments_template();
 						}
 					?>
 				<?php endwhile; // end of the loop. ?>
 					</div><!-- #content .site-content -->
 				</div><!-- #primary .content-area -->
 			</div>
-			<div class="five columns omega">
+			<div class="three columns omega">
 				<?php get_sidebar('single-post'); ?>
 			</div>
 		<?php } ?>
