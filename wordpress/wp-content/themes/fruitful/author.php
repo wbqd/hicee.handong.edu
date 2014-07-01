@@ -16,9 +16,9 @@ get_header(); ?>
 			<h1 class="archive-title"><?php printf( __( 'All posts by %s', 'fruitful' ), '<span class="vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . '" title="' . esc_attr( get_the_author() ) . '" rel="me">' . get_the_author() . '</a></span>' ); ?></h1>
 		</header><!-- .archive-header -->
 	<?php endif; ?>
-					
-					
-	<div class="eleven columns alpha">
+
+
+	<div class="thirteen columns alpha">
 		<div id="primary" class="content-area">
 			<div id="content" class="site-content" role="main">
 
@@ -42,7 +42,7 @@ get_header(); ?>
 		</div><!-- #primary -->
 	</div>
 
-	<div class="five columns omega">
+	<div class="three columns omega">
 		<?php get_sidebar('blogright'); ?>
 	</div>
 <?php get_footer(); ?>
