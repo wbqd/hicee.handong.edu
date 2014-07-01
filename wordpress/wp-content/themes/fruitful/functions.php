@@ -1259,6 +1259,11 @@ function fruitful_get_content_with_custom_sidebar($curr_template) {
 	}
 	function get_html_custom_post_template($content_, $sidebar_, $type_ = 1) { ?>
 		<?php if ($type_ == 1) { ?>
+			<div class="three columns <?php echo $sidebar_;?>">
+				<?php get_sidebar('single-post'); ?>
+			</div>
+		<?php } ?>
+		<?php if ($type_ == 1) { ?>
 		<div class="thirteen columns <?php echo $content_;?>">
 		<?php } else { ?>
 		<div class="sixteen columns <?php echo $content_ . ' ' . $sidebar_;?>">
@@ -1269,11 +1274,6 @@ function fruitful_get_content_with_custom_sidebar($curr_template) {
 				</div><!-- #content .site-content -->
 			</div><!-- #primary .content-area -->
 		</div>
-		<?php if ($type_ == 1) { ?>
-			<div class="three columns <?php echo $sidebar_;?>">
-				<?php get_sidebar('single-post'); ?>
-			</div>
-		<?php } ?>
 	<?php
 	}
 	if ($curr_template == 1) {
