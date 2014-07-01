@@ -1286,3 +1286,8 @@ function fruitful_get_content_with_custom_sidebar($curr_template) {
 		get_html_custom_post_template('omega', 'alpha', 0);
 	}
 }
+
+// Increase the Maximum File Upload Size in WordPress
+@ini_set( 'upload_max_size' , '1024M' );
+@ini_set( 'post_max_size', '1024M');
+@ini_set( 'max_execution_time', '86400' );
