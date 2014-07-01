@@ -14,7 +14,7 @@ get_header(); ?>
 			<?php endif; ?>
 		</header><!-- .archive-header -->
 
-		<div class="thirteen columns alpha">
+		<div class="thirteen columns omega">
 			<div id="primary" class="content-area">
 				<div id="content" class="site-content" role="main">
 
@@ -32,7 +32,7 @@ get_header(); ?>
 				</div><!-- #content -->
 			</div><!-- #primary -->
 		</div>
-		<div class="three columns omega">
+		<div class="three columns alpha">
 			<?php get_sidebar('blogright'); ?>
 		</div>
 <?php get_footer(); ?>

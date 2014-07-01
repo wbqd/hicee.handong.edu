@@ -10,7 +10,7 @@
  */
 
 get_header(); ?>
-		<div class="thirteen columns alpha">
+		<div class="thirteen columns omega">
 		<section id="primary" class="content-area">
 			<div id="content" class="site-content" role="main">
 
@@ -93,7 +93,7 @@ get_header(); ?>
 			</div><!-- #content .site-content -->
 		</section><!-- #primary .content-area -->
 		</div>
-		<div class="three columns omega">
+		<div class="three columns alpha">
 			<?php get_sidebar('blogright'); ?>
 		</div>
 <?php get_footer(); ?>
