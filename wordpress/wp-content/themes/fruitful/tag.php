@@ -14,8 +14,8 @@ get_header(); ?>
 		<div class="archive-meta"><?php echo tag_description(); ?></div>
 		<?php endif; ?>
 	</header><!-- .archive-header -->
-				
-	<div class="eleven columns alpha">
+
+	<div class="thirteen columns alpha">
 		<div id="primary" class="content-area">
 			<div id="content" class="site-content" role="main">
 			<?php if ( have_posts() ) : ?>
@@ -33,7 +33,7 @@ get_header(); ?>
 		</div><!-- #primary -->
 	</div>
 
-	<div class="five columns omega">
+	<div class="three columns omega">
 		<?php get_sidebar('Main Sidebar'); ?>
-	</div>	
+	</div>
 <?php get_footer(); ?>
