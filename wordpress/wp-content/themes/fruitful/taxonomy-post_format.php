@@ -17,7 +17,7 @@ get_header(); ?>
 	<header class="archive-header">
 		<h1 class="archive-title"><?php printf( __( '%s Archives', 'fruitful' ), '<span>' . get_post_format_string( get_post_format() ) . '</span>' ); ?></h1>
 	</header><!-- .archive-header -->
-	<div class="eleven columns alpha">		
+	<div class="thirteen columns alpha">
 		<div id="primary" class="content-area">
 			<div id="content" class="site-content" role="main">
 
@@ -35,9 +35,9 @@ get_header(); ?>
 			<?php endif; ?>
 			</div><!-- #content -->
 		</div><!-- #primary -->
-	</div>	
+	</div>
 
-	<div class="five columns omega">
+	<div class="three columns omega">
 		<?php get_sidebar('Main Sidebar'); ?>
-	</div>	
+	</div>
 <?php get_footer(); ?>
