@@ -69,11 +69,21 @@ function get_custom_login_code() {
 
 	function add_custom_style() {
 		global $wp_styles;
-		wp_register_style('_opensans','http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext');
+		$mt_options = mt_get_plugin_options(true);
+		
+		if (!empty($mt_options['body_font_family'])) {
+			$font_link = '';
+			$font_link = mt_get_google_font(esc_attr($mt_options['body_font_family']));
+			if ($font_link != '') {
+				wp_register_style('_custom_fonts', $font_link);
+				$wp_styles->do_items('_custom_fonts');		
+			}	
+		}
+		
 		wp_register_style('_iconstyle', MAINTENANCE_URI .'load/images/fonts-icon/icons.style.css');
 		wp_register_style('_style', 	MAINTENANCE_URI .'load/style.css');
 		$wp_styles->do_items('_iconstyle');
-		$wp_styles->do_items('_opensans');
+		
 		/*Add inline custom style*/
 		get_options_style();
 		$wp_styles->do_items('_style');
@@ -121,9 +131,10 @@ function get_custom_login_code() {
 			  $options_style .= '.preloader {background-color: '. esc_attr($mt_options['body_bg_color']) .'}';
 		}
 		
-		if (!isset($mt_options['is_login'])) {
-			  $options_style .= '.logo { display: block; float: none;  margin: 0;  text-align: center; width: 100%;} ';
+		if (!empty($mt_options['body_font_family'])) { 
+			$options_style .=  'body {font-family: '. esc_attr($mt_options['body_font_family']) .'; }';
 		}
+		
 		
 		if ( !empty($mt_options['font_color']) ) {
 			 $font_color = esc_attr($mt_options['font_color']);
@@ -132,8 +143,14 @@ function get_custom_login_code() {
 			 $options_style .= '.login-form   {color: '. $font_color .'} ';
 			 $options_style .= '.ie7 .login-form input[type="text"], .ie7 .login-form input[type="password"], .ie7 .login-form input[type="submit"]  {color: '. $font_color .'} ';
 			 $options_style .= '.site-content {color: '. $font_color .'} ';
+			 $options_style .= '.user-content-wrapper, .user-content {color: '. $font_color .'} ';
+			 $options_style .= 'a.close-user-content, #mailchimp-box form input[type="submit"]  {border-color:'. $font_color .'} ';
 			 $options_style .= 'footer {color: '. $font_color .'} ';
 			 $options_style .= '.ie7 .company-name {color: '. $font_color .'} ';
+		}
+		
+		if (!empty($mt_options['custom_css'])) {
+			$options_style .= wp_kses_stripslashes($mt_options['custom_css']);
 		}
 		
 		wp_add_inline_style( '_style', $options_style );
@@ -143,16 +160,18 @@ function get_custom_login_code() {
 	function get_logo_box() {
 		$mt_options = mt_get_plugin_options(true);
 		$out_html = '';
-			$out_html = '<a class="logo" rel="home" href="'.esc_url(site_url('')) .'">';
+			
 			if ( !empty($mt_options['logo']) ) { 
-				 $logo = wp_get_attachment_image_src( $mt_options['logo'], 'full'); 
-				 $out_html .= '<div class="img-inner">';
+				$logo = wp_get_attachment_image_src( $mt_options['logo'], 'full'); 
+				$out_html = '<a class="logo" rel="home" href="'.esc_url(site_url('')) .'" style="width:'.$logo[1].'px">';
 					$out_html .= '<img src="'. esc_url($logo[0]) .'" alt="logo"/>';
-				 $out_html .= '</div>';
+				$out_html .= '</a>'; 
 			} else { 
-				 $out_html .= '<h1 class="site-title">'. get_bloginfo( 'name' ) .'</h1>';
+				$out_html = '<a class="logo istext" rel="home" href="'.esc_url(site_url('')) .'">';
+					$out_html .= '<h1 class="site-title">'. get_bloginfo( 'name' ) .'</h1>';
 			} 
-			$out_html .= '</a>';
+			$out_html .= '</a>'; 
+			
 		echo $out_html;
 	}
 	add_action ('logo_box', 'get_logo_box', 10);
@@ -184,7 +203,11 @@ function get_custom_login_code() {
 				$out_ .= 'jQuery(document).ready(function() { ' . "\r\n";
 					if (!empty($mt_options['body_bg'])) {
 						$bg    =  wp_get_attachment_image_src( $mt_options['body_bg'], 'full');
-						$out_ .= 'jQuery.backstretch("'. esc_url($bg[0]) .'");' . "\r\n" ;
+						$out_ .= 'if (jQuery(window).height() < 768) {'. "\r\n" ;
+							$out_ .= 'jQuery("body").backstretch("'. esc_url($bg[0]) .'");' . "\r\n" ;
+						$out_ .= '}	else {'. "\r\n" ;
+							$out_ .= 'jQuery(".main-container").backstretch("'. esc_url($bg[0]) .'");' . "\r\n" ;
+						$out_ .= '}'. "\r\n" ;
 					}
 					
 					if (!empty($mt_options['is_blur'])) {
@@ -212,6 +235,16 @@ function get_custom_login_code() {
 	}
 	add_action('footer_section', 'get_footer_section', 10);
 	
+	
+	function do_button_login_form($error = -1) {
+		?>
+			<div id="btn-open-login-form" class="btn-open-login-form">
+				<i class="foundicon-lock"></i>
+			</div>
+		<?php
+	
+	}
+	
 	function do_login_form($user_login, $class_login, $class_password) {
 		$mt_options  = mt_get_plugin_options(true);
 		$out_login_form = $form_error = '';
@@ -220,9 +253,11 @@ function get_custom_login_code() {
 		}
 		
 		$out_login_form .= '<form name="login-form" id="login-form" class="login-form'.$form_error.'" method="post">';
+				$out_login_form .= '<label for="">'. __('User Login', 'maintenance') .'</label>';
 				$out_login_form .= '<span class="licon '.$class_login.'"><input type="text" name="log" id="log" value="'.  $user_login .'" size="20"  class="input username" placeholder="'. __('Username', 'maintenance') .'"/></span>';
 				$out_login_form .= '<span class="picon '.$class_password.'"><input type="password" name="pwd" id="login_password" value="" size="20"  class="input password" placeholder="'. __('Password', 'maintenance') .'" /></span>';
-				$out_login_form .= '<input type="submit" class="button" name="submit" id="submit" value="'.__('Sign In','maintenance') .'" tabindex="4" />';
+				$out_login_form .= '<a class="lost-pass" href="'.esc_url(wp_lostpassword_url()).'" title="'.__('Lost Password', 'maintenance') .'">'.__('Lost Password', 'maintenance') .'</a>';
+				$out_login_form .= '<input type="submit" class="button" name="submit" id="submit" value="'.__('Login','maintenance') .'" tabindex="4" />';
 				$out_login_form .= '<input type="hidden" name="is_custom_login" value="1" />';
 		$out_login_form .= '</form>';
 		
@@ -237,21 +272,6 @@ function get_custom_login_code() {
 		echo $out; 
 	}
 	add_action('before_content_section', 'get_preloader_element', 5);
-	
-	function maintenance_fruitful_metadevice() {
-		$browser 		= '';				
-		$browser_ip		= strpos($_SERVER['HTTP_USER_AGENT'],"iPhone");		
-		$browser_an		= strpos($_SERVER['HTTP_USER_AGENT'],"Android");		
-		$browser_ipad 	= strpos($_SERVER['HTTP_USER_AGENT'],"iPad");			 
-		
-		if ($browser_ip  	== true) { $browser = 'iphone'; }	 
-		if ($browser_an		== true) { $browser = 'android'; } 	 
-		if ($browser_ipad 	== true) { $browser = 'ipad';   }
-
-		if($browser == 'iphone') 	{ echo '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';  } 
-		if($browser == 'android') 	{ echo '<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width" />'; } 
-		if($browser == 'ipad') 		{ echo '<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />'; } 
-	}
 	
 	function maintenance_gg_analytics_code() {
 		$mt_options  = mt_get_plugin_options(true);
@@ -283,21 +303,13 @@ function get_custom_login_code() {
 				$protocol = "HTTP/1.1";
 				header( "$protocol 503 Service Unavailable", true, 503 );
 				
-				if ($mt_options['state']) {
-					if (!empty($mt_options['expiry_date'])) {
-						$vCurrDate =  DateTime::createFromFormat('d/m/Y', $mt_options['expiry_date']);
-						list( $date, $time ) = explode( ' ', current($vCurrDate));
-						list( $year, $month, $day ) = explode(  '-', $date );
-						list( $hour, $minute, $second ) = explode ( ':', $time );
-						$timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
-						
-						
-						if ( time() < $timestamp ) {
-							header( "Retry-After: " . gmdate("M d Y H:i:s", $timestamp) );
+				if (($mt_options['state']) && (!empty($mt_options['expiry_date_end']))) {
+						$vCurrDate = strtotime($mt_options['expiry_date_end']); 
+						if ( strtotime( current_time('mysql', 1)) < $vCurrDate ) {
+							header( "Retry-After: " . gmdate("D, d M Y H:i:s", $vCurrDate) );
 						} else {
 							header( "Retry-After: 3600" );
 						}
-					}	
 				} else {
 					header( "Retry-After: 3600" );
 				}	

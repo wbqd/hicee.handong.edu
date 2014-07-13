@@ -1,4 +1,25 @@
 <?php
+	global $standart_fonts;
+	$standart_fonts = array(
+        "Arial, Helvetica, sans-serif" 			=> "Arial, Helvetica, sans-serif",
+        "Arial Black, Gadget, sans-serif" 		=> "Arial Black, Gadget, sans-serif",
+        "Bookman Old Style, serif" 				=> "Bookman Old Style, serif",
+        "Comic Sans MS, cursive" 				=> "Comic Sans MS, cursive",
+        "Courier, monospace" 					=> "Courier, monospace",
+        "Garamond, serif" 						=> "Garamond, serif",
+        "Georgia, serif" 						=> "Georgia, serif",
+        "Impact, Charcoal, sans-serif" 			=> "Impact, Charcoal, sans-serif",
+        "Lucida Console, Monaco, monospace" 	=> "Lucida Console, Monaco, monospace",
+        "Lucida Sans Unicode, Lucida Grande, sans-serif" => "Lucida Sans Unicode, Lucida Grande, sans-serif",
+        "MS Sans Serif, Geneva, sans-serif" 	=> "MS Sans Serif, Geneva, sans-serif",
+        "MS Serif, New York, sans-serif" 		=> "MS Serif, New York, sans-serif",
+        "Palatino Linotype, Book Antiqua, Palatino, serif" => "Palatino Linotype, Book Antiqua, Palatino, serif",
+        "Tahoma,Geneva, sans-serif" 			=> "Tahoma, Geneva, sans-serif",
+        "Times New Roman, Times,serif" 			=> "Times New Roman, Times, serif",
+        "Trebuchet MS, Helvetica, sans-serif" 	=> "Trebuchet MS, Helvetica, sans-serif",
+        "Verdana, Geneva, sans-serif" 			=> "Verdana, Geneva, sans-serif",
+    );
+		
 	
 	function mt_get_plugin_options($is_current = false) {
 		$saved	  = (array) get_option('maintenance_options');
@@ -98,10 +119,73 @@
 				$out_filed .= '</tr>';
 			echo $out_filed;
 	}		
-				
+	
+	function mt_get_google_font($font = null) {	
+		$font_params = $full_link = $gg_fonts = '';
+		
+		if (file_exists(MAINTENANCE_INCLUDES .'fonts/googlefonts.json')) {
+			$gg_fonts = json_decode(file_get_contents(MAINTENANCE_INCLUDES .'fonts/googlefonts.json'));
+		}	
+			
+		if (property_exists ($gg_fonts, $font)) {
+			$curr_font = $gg_fonts->{$font};
+			if (!empty($curr_font)) {
+				$name_font = str_replace(' ','+',$font);
+				foreach ($curr_font->variants as $values) {
+					$font_params .= $values->id . ',';
+				}
+			
+				$font_params = trim($font_params, ",");
+				$full_link = $name_font . ':' . $font_params;
+				$full_link = 'http'. ( is_ssl() ? 's' : '' ) .'://fonts.googleapis.com/css?family=' . $full_link;
+			}	
+		}	
+		
+		return $full_link;
+	}
+
+    function get_fonts_field($title, $id, $name, $value) {
+			global $standart_fonts;
+			$out_items = $gg_fonts = '';
+			
+			if (file_exists(MAINTENANCE_INCLUDES .'fonts/googlefonts.json')) {
+				$gg_fonts = json_decode(file_get_contents(MAINTENANCE_INCLUDES .'fonts/googlefonts.json'));
+			}	
+			
+			$out_filed = '';
+			$out_filed .= '<tr valign="top">';
+					$out_filed .= '<th scope="row">'. esc_attr($title) .'</th>';
+					$out_filed .= '<td>';
+						$out_filed .= '<filedset>';
+						if(!empty($standart_fonts)) {
+								$out_items .= '<optgroup label="' . __('Standard Fonts', 'anaglyph-framework') . '">';
+								foreach ($standart_fonts as $key => $options) {
+									$out_items .= '<option value="'.$key.'" '. selected( $value, $key, false ) .'>'.$options.'</option>';
+								}
+						}	
+						
+						if (!empty($gg_fonts)) {
+								$out_items .= '<optgroup label="' . __('Google Web Fonts', 'anaglyph-framework') . '">';
+							foreach ($gg_fonts as $key => $options) {
+								$out_items .= '<option value="'.$key .'" '. selected( $value, $key, false ) .'>'.$key.'</option>';
+							}
+						}
+						
+						if (!empty($out_items)) {
+							$out_filed .= '<select class="select2_customize" name="lib_options['.$name.']" id="'.esc_attr($id).'">';
+								$out_filed .= $out_items;
+							$out_filed .= '</select>';
+						}	
+						$out_filed .= '<filedset>';
+					$out_filed .= '</td>';	
+				$out_filed .= '</tr>';
+			return $out_filed;
+	}		
+	
 	function maintenance_page_create_meta_boxes() {
 		global $maintenance_variable;
-		add_meta_box( 'maintenance-general', __( 'General Settings', 'maintenance' ),  'add_data_fields', 				 $maintenance_variable->options_page, 'normal', 'default');
+		add_meta_box( 'maintenance-general', __( 'General Settings', 'maintenance' ),  'add_data_fields', $maintenance_variable->options_page, 'normal', 'default');
+		add_meta_box( 'maintenance-css', 	 __( 'Custom CSS', 'maintenance' ),        'add_css_fields', $maintenance_variable->options_page, 'normal', 'default');
 	}
 	add_action('add_meta_boxes', 'maintenance_page_create_meta_boxes', 10);
 	
@@ -119,14 +203,18 @@
 	
 	function add_data_fields ($object, $box) {
 		$mt_option = mt_get_plugin_options(true);
-		echo '<table class="form-table">';
-			echo '<tbody>';
+		$is_blur   = false; 
+		?>
+		<table class="form-table">
+			<tbody>
+		<?php	
 				generate_input_filed(__('Page title', 'maintenance'), 'page_title', 'page_title', wp_kses_post($mt_option['page_title']));
 				generate_input_filed(__('Headline', 'maintenance'),	'heading', 'heading', 		  wp_kses_post($mt_option['heading']));
 				generate_textarea_filed(__('Description', 'maintenance'), 'description', 'description', wp_kses_post($mt_option['description']));
 				generate_image_filed(__('Logo', 'maintenance'), 'logo', 'logo', intval($mt_option['logo']), 'boxes box-logo', __('Upload Logo', 'maintenance'), 'upload_logo upload_btn button');
 				do_action('maintenance_background_field');
 				do_action('maintenance_color_fields');
+				do_action('maintenance_font_fields');
 				generate_check_filed(__('Admin bar', 'maintenance'), __('Show admin bar', 'maintenance'), 'admin_bar_enabled', 'admin_bar_enabled', isset($mt_option['admin_bar_enabled']));
 				generate_check_filed(__('503', 'maintenance'), __('Service temporarily unavailable', 'maintenance'), '503_enabled', '503_enabled',  isset($mt_option['503_enabled']));
 				
@@ -134,13 +222,31 @@
 				if (!empty($mt_option['gg_analytics_id'])) {
 					$gg_analytics_id = esc_attr($mt_option['gg_analytics_id']);
 				}
+				
 				generate_input_filed(__('Google Analytics ID',  'maintenance'), 'gg_analytics_id', 'gg_analytics_id', $gg_analytics_id,  __('UA-XXXXX-X', 'maintenance'));
 				generate_input_filed(__('Blur intensity',  'maintenance'), 'blur_intensity', 'blur_intensity', intval($mt_option['blur_intensity']));
-				generate_check_filed(__('Background blur', 'maintenance'), __('Apply a blur', 'maintenance'), 'is_blur', 'is_blur', isset($mt_option['is_blur']));
+
+				if (isset($mt_option['is_blur'])) {
+					if ($mt_option['is_blur']) $is_blur = true; 
+				} 
+				
+				generate_check_filed(__('Background blur', 'maintenance'), __('Apply a blur', 'maintenance'), 'is_blur', 'is_blur', $is_blur);
 				generate_check_filed(__('Login On / Off', 'maintenance'),  '', 'is_login', 'is_login', isset($mt_option['is_login']));
-			echo '</tbody>';
-		echo '</table>';
+		?>		
+			</tbody>
+		</table>
+		<?php
 	}	
+	
+	
+	function add_css_fields() {
+		$mt_option = mt_get_plugin_options(true);
+		echo '<table class="form-table">';
+			echo '<tbody>';
+				generate_textarea_filed(__('CSS Code', 'maintenance'), 'custom_css', 'custom_css', wp_kses_stripslashes($mt_option['custom_css']));
+			echo '</tbody>';
+		echo '</table>';	
+	}
 	
 	function get_background_fileds_action() {
 		$mt_option = mt_get_plugin_options(true);
@@ -150,10 +256,17 @@
 	
 	function get_color_fileds_action() {
 		$mt_option = mt_get_plugin_options(true);
-		get_color_field(__('Background color', 'maintenance'), 'body_bg_color', 'body_bg_color', esc_attr($mt_option['body_bg_color']), '#333333');
+		get_color_field(__('Background color', 'maintenance'), 'body_bg_color', 'body_bg_color', esc_attr($mt_option['body_bg_color']), '#1111111');
 		get_color_field(__('Font color', 'maintenance'), 'font_color', 'font_color', esc_attr($mt_option['font_color']), 	  '#ffffff');
 	}	
 	add_action ('maintenance_color_fields', 'get_color_fileds_action', 10);
+	
+	
+	function get_font_fileds_action() {
+		$mt_option = mt_get_plugin_options(true);
+		echo get_fonts_field(__('Font family', 'maintenance'), 'body_font_family', 'body_font_family', esc_attr($mt_option['body_font_family'])); 	
+	}	
+	add_action ('maintenance_font_fields', 'get_font_fileds_action', 10);
 	
 	
 	function maintenanace_contact_support() {
@@ -182,22 +295,23 @@
 		$promo_text .= '</div>';	
 		echo $promo_text;
 	}
+	
 	function load_maintenance_page() {
 		global $mt_options;
-		$vCurrDate = '';
+		$vCurrDate_start = $vCurrDate_end = $vCurrTime = '';
 		$mt_options	= mt_get_plugin_options(true);
 			if (!is_user_logged_in()) {
 				if ($mt_options['state']) {
-					if (!empty($mt_options['expiry_date'])) {
-						$vCurrDate =  DateTime::createFromFormat('d/m/Y', $mt_options['expiry_date']);
-						list( $date, $time ) = explode( ' ', current($vCurrDate));
-						list( $year, $month, $day ) 	 = explode(  '-', $date );
-						list( $hour, $minute, $second )  = explode ( ':', $time );
-						$timestamp = mktime( $hour, $minute, $second, $month, $day, $year );
+					if (!empty($mt_options['expiry_date_start']) && !empty($mt_options['expiry_date_end'])) {
+						$vCurrTime 		 = strtotime(current_time('mysql', 1));
+						$vCurrDate_start = strtotime($mt_options['expiry_date_start']); 
+						$vCurrDate_end 	 = strtotime($mt_options['expiry_date_end']); 
 						
-						if ((time() > $timestamp) && (!empty($mt_options['is_down']))) {
-						    return true;
+						if ($vCurrTime < $vCurrDate_start) return true;
+						if ($vCurrTime >= $vCurrDate_end) {
+							if (!empty($mt_options['is_down'])) return true;
 						}
+						
 					}	
 
 					if ( file_exists (MAINTENANCE_LOAD . 'index.php')) {
@@ -253,6 +367,48 @@
 		$rgb = array($r, $g, $b);
 		return implode(",", $rgb); 
 	}
+		
+		
+	function mt_insert_attach_sample_files() {
+		global $wpdb;
+		$title = '';
+		$attach_id   = 0;
+		$is_attach_exists = $wpdb->get_results( "SELECT p.ID FROM $wpdb->posts p WHERE  p.post_title LIKE '%mt-sample-background%'", OBJECT );
+		if (!empty($is_attach_exists)) {
+			$attach_id = current($is_attach_exists)->ID;
+		} else {
+			require_once(ABSPATH . 'wp-admin/includes/image.php');
+			$upload_dir  = wp_upload_dir();
+			$image_url 	 = MAINTENANCE_URI . 'images/mt-sample-background.jpg';
+			$file_name   = basename( $image_url );
+			$upload      = wp_upload_bits( $file_name, null, file_get_contents($image_url), current_time( 'mysql', $gmt = 0 ));
+				
+			if ($upload['error'] == '') {
+				$title = preg_replace('/\.[^.]+$/', '', basename($image_url));
+						
+				$wp_filetype = wp_check_filetype(basename($upload['file']), null );
+				$attachment = array(
+						'guid' 			 => $upload['url'], 
+						'post_mime_type' => $wp_filetype['type'],
+						'post_title' 	 => $title,
+						'post_content' 	 => '',
+						'post_status' 	 => 'inherit'
+					);
+					
+				$attach_id   = wp_insert_attachment($attachment, $upload['file']);
+				$attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+				wp_update_attachment_metadata($attach_id, $attach_data);
+				
+			}
+		}	
+
+		if (!empty($attach_id)) {
+			return $attach_id;
+		} else {
+			return '';
+		}
+	}
+	
 	
 	function mt_get_default_array() {
 		return array(
@@ -261,15 +417,16 @@
 			'heading'	  		=> __('Maintenance mode is on', 'maintenance'),	
 			'description' 		=> __('Website will be available soon', 'maintenance'),
 			'logo'		  		=> '',
-			'body_bg'	  		=> '',
-			'body_bg_color'    	=> '#333333',
+			'body_bg'	  		=> mt_insert_attach_sample_files(),
+			'body_bg_color'    	=> '#111111',
 			'font_color' 		=> '#ffffff',
+			'body_font_family' 	=> 'Open Sans',
 			'is_blur'			=> false,
 			'blur_intensity'	=> 5,	
 			'admin_bar_enabled' => true,
 			'503_enabled'		=> true,
 			'gg_analytics_id'   => '',
-			'is_login'			=> true
-			
+			'is_login'			=> true,
+			'custom_css'		=> ''
 		);
 	}
