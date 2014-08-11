@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Development package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2014-04-16 05:34:43+0000\n"
+"PO-Revision-Date: 2014-06-06 09:57:15+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -31,7 +31,7 @@ msgstr "주소"
 
 #: wp-includes/class-wp-editor.php:944
 msgid "If you&#8217;re looking to paste rich content from Microsoft Word, try turning this option off. The editor will clean up text pasted from Word automatically."
-msgstr "마이크로 소프트 워드에서 리치 콘텐츠를 붙여넣으려면, 이 옵션을 끄세요. 편집기가 워드에서 붙여넣은 텍스트의 포맷을 자동으로 제거할 것입니다."
+msgstr "마이크로소프트 워드에서 서식이 포함된 콘텐츠를 붙여넣으려면, 이 옵션을 꺼주세요. 편집기가 워드에서 붙여넣은 텍스트의 포맷을 자동으로 제거할 것입니다."
 
 #: wp-includes/class-wp-customize-control.php:856
 msgid "While you can crop images to your liking after clicking <strong>Add new</strong>, your theme recommends a header size of <strong>%s &times; %s</strong> pixels."
@@ -190,7 +190,7 @@ msgstr "새 이미지 추가"
 #: wp-includes/class-wp-customize-control.php:922
 msgctxt "Reorder widgets in Customizer"
 msgid "Reorder"
-msgstr "순저 재정렬"
+msgstr "순서 재정렬"
 
 #: wp-includes/class-wp-customize-control.php:923
 msgctxt "Cancel reordering widgets in Customizer"
@@ -347,7 +347,7 @@ msgstr "오른쪽에서 왼쪽으로"
 #: wp-includes/class-wp-editor.php:855
 msgctxt "editor button"
 msgid "Left to right"
-msgstr "왼족에서 오른쪽으로"
+msgstr "왼쪽에서 오른쪽으로"
 
 #: wp-includes/class-wp-editor.php:872
 msgctxt "find/replace"
@@ -480,7 +480,7 @@ msgstr "포맷"
 
 #: wp-includes/media-template.php:837 wp-includes/media-template.php:921
 msgid "Add alternate sources for maximum HTML5 playback:"
-msgstr "최대의 HTML5 실행을 위해 대체 소스 추가:"
+msgstr "최적화된 HTML5 실행을 위한 대체 소스 추가:"
 
 #: wp-includes/media.php:2806
 msgid "Image Details"
@@ -489,7 +489,7 @@ msgstr "이미지 상세"
 #: wp-includes/update.php:119 wp-includes/update.php:287
 #: wp-includes/update.php:435
 msgid "An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href=\"https://wordpress.org/support/\">support forums</a>."
-msgstr "예상하지 않은 에러 발생. WordPress.org나 이 서버에 뭔가 잘못 됐습니다. 문제가 지속되면 <a href=\"https://wordpress.org/support/\">지원 포럼</a>에 문의하세요."
+msgstr "예상치 못한 에러가 발생했습니다. WordPress.org나 서버 설정에 오류가 있습니다. 문제가 지속되면 <a href=\"https://wordpress.org/support/\">지원 포럼</a>에 문의하세요."
 
 #: wp-includes/media.php:2763
 msgid "Back"
@@ -709,7 +709,7 @@ msgstr ""
 
 #: wp-login.php:616
 msgid "Hint: The password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers, and symbols like ! \" ? $ % ^ &amp; )."
-msgstr "힌트: 비밀번호는 최소한 7개의 문자가 돼야 합니다. 더 강하게 만들려면 대문자, 소문자, 숫자 그리고 ! \" ? $ % ^ &amp; ) 같은 기호를 사용하세요."
+msgstr "힌트: 비밀번호는 최소한 7개의 문자가 돼야 합니다. 더욱 강력한 비밀번호를 위해 대문자, 소문자, 숫자, ! \" ? $ % ^ &amp; ) 같은 기호를 사용하세요."
 
 #: wp-includes/class-wp-editor.php:845
 msgid "Insert/edit video"
@@ -786,7 +786,7 @@ msgstr "제안된 헤더 랜덤화"
 
 #: wp-includes/class-wp-customize-control.php:825
 msgid "No image set"
-msgstr "이미지 설정 없음"
+msgstr "설정된 이미지 없음"
 
 #: wp-includes/class-wp-customize-control.php:866
 msgid "Current header"
@@ -2860,7 +2860,7 @@ msgstr "(이 메세지는 버전 %s에서 추가되었습니다.)"
 
 #: wp-includes/user.php:153
 msgid "<strong>ERROR</strong>: The password you entered for the username <strong>%1$s</strong> is incorrect. <a href=\"%2$s\" title=\"Password Lost and Found\">Lost your password</a>?"
-msgstr "<strong>에러</strong>:사용자명의 비밀번호가 올바르지 않습니다. <a href=\"%s\" title=\"Password Lost and Found\">비밀번호를 잊으셨습니까</a>?"
+msgstr "<strong>에러</strong>:입력한 사용자명 <strong>%1$s</strong>의 비밀번호가 올바르지 않습니다. <a href=\"%2$s\" title=\"비밀번호 찾기\">비밀번호를 잊으셨습니까</a>?"
 
 #: wp-includes/class-wp-xmlrpc-server.php:5655
 msgid "Sorry, you cannot publish this post."
